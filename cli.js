@@ -230,6 +230,15 @@ function run(data) {
     opts.src = input;
   }
 
+  // If REBASE is in the env variable then add opts.rebase based on this
+  if (process.env.REBASE) {
+    try {
+      opts.rebase = JSON.parse(process.env.REBASE);
+    } catch (error) {
+      showError(`Error parsing REBASE environment variable: ${error.message}`);
+    }
+  }
+
   try {
     generate(opts, (error, val) => {
       if (error) {
